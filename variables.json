@@ -1,0 +1,11 @@
+{
+    "esxi_host": "ip or hostname server vmware",
+    "esxi_datastore": "primary",
+    "esxi_username": "user vmware",
+    "esxi_password": "password vmware",
+    "remote_datastore": "ESXIHM01_FS1_DT06",
+    "iso_checksum": "sha256:3756b3201007a88da35ee0957fbe6666c495fb3d8ef2e851ed2bd1115dc36446",
+    "iso_url": "ubuntu-18.04.5-live-server-amd64.iso",
+    "remote_cache_datastore": "ESXIHM01_FS1_DT06",
+    "remote_cache_directory": "ISOs"
+  }

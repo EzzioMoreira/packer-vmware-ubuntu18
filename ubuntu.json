@@ -1,0 +1,55 @@
+{
+    "builders": [{
+      "name": "ubuntu-18.04",
+      "vm_name": "ubuntu-18.04",
+      "type": "vmware-iso",
+      "guest_os_type": "ubuntu-64",
+      
+      "headless": false,
+      "skip_export" : true,
+  
+      "iso_url": "{{user `iso_url`}}",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "remote_cache_datastore": "{{user `remote_cache_datastore`}}",
+      "remote_cache_directory": "{{user `remote_cache_directory`}}",
+      "ssh_username": "packer",
+      "ssh_password": "packer",
+      "ssh_timeout": "15m",
+  
+      "disk_type_id": "thin",
+  
+      "floppy_files": [
+        "ubuntu.cfg"
+      ],
+  
+      "boot_command": [
+        "<enter><wait><f6><esc><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "/install/vmlinuz noapic ",
+        "preseed/file=/floppy/ubuntu.cfg ",
+        "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
+        "hostname={{ .Name }} ",
+        "fb=false debconf/frontend=noninteractive ",
+        "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
+        "keyboard-configuration/variant=USA console-setup/ask_detect=false ",
+        "grub-installer/bootdev=/dev/sda ",
+        "initrd=/install/initrd.gz -- <enter>"
+      ],
+  
+      "shutdown_command": "echo 'shutdown -P now' > shutdown.sh; echo 'nullgrid'|sudo -S sh 'shutdown.sh'",
+  
+      "remote_type": "esx5",
+      "remote_host": "{{user `esxi_host`}}",
+      "remote_datastore": "{{user `remote_datastore`}}",
+      "remote_username": "{{user `esxi_username`}}",
+      "remote_password": "{{user `esxi_password`}}",
+      "keep_registered": true,
+      "ovftool_options": "--noSSLVerify",
+  
+      "vmx_data": {
+        "ethernet0.networkName": "VLAN2"
+      }
+    }]
+  }
